@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <Sparkle className="h-7 w-7 text-rose-500 group-hover:text-rose-600 transition duration-300" />
+            <img src="src/assets/favicon.jpg" className="h-10 w-10 text-rose-500 group-hover:text-rose-600 transition duration-300" alt="Logo" />
             <span className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white group-hover:text-rose-600 dark:group-hover:text-rose-400 transition">
               PL Foundation
             </span>
