@@ -28,31 +28,43 @@ export function CommentsList({ postId }: { postId: string }) {
   };
 
   return (
-    <div>
-      {comments.map(c => (
-        <div key={c.comment_id} className="border-b py-2">
-          <small>
-            {c.name || 'Guest'} • {new Date(c.created_at).toLocaleString()}
-          </small>
-          <p>{c.content}</p>
-        </div>
-      ))}
-      <form onSubmit={handleSubmit} className="mt-4">
+    <div className="mt-4">
+      {/* Scrollable comment list */}
+      <div className="max-h-20 overflow-y-auto mb-4 bg-white rounded border p-2 space-y-2">
+        {comments.length > 0 ? (
+          comments.map(c => (
+            <div key={c.comment_id} className="border-b pb-2">
+              <small className="text-gray-600">
+                {c.name || 'Guest'} • {new Date(c.created_at).toLocaleString()}
+              </small>
+              <p className="text-sm mt-1">{c.content}</p>
+            </div>
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">No comments yet.</p>
+        )}
+      </div>
+
+      {/* Comment form */}
+      <form onSubmit={handleSubmit} className="space-y-2">
         <input
           type="text"
           value={name}
           onChange={e => setName(e.target.value)}
           placeholder="Your name (optional)"
-          className="w-full border rounded p-2 mb-2"
+          className="w-full border rounded p-2 text-sm"
         />
         <textarea
           value={text}
           onChange={e => setText(e.target.value)}
           required
           placeholder="Add your comment..."
-          className="w-full border rounded p-2"
+          className="w-full border rounded p-2 text-sm"
         />
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded mt-2">
+        <button
+          type="submit"
+          className="bg-blue-600 text-white text-sm px-4 py-2 rounded hover:bg-blue-700"
+        >
           Add Comment
         </button>
       </form>

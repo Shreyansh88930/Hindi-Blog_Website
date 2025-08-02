@@ -347,3 +347,11 @@ body {
     border: 1px solid #e5e7eb !important;
   }
 }
+@keyframes like-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.animate-like-pulse {
+  animation: like-pulse 0.6s ease-in-out;
+}

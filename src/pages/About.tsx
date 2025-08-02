@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import authorImg from '../assets/author.png';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
   ({ className = '', ...props }, ref) => (
@@ -39,6 +40,12 @@ const About: React.FC = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1200); // simulate loading delay
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setContactForm({
@@ -62,7 +69,7 @@ const About: React.FC = () => {
     });
     setIsSubmitting(false);
   };
-
+  if (loading) return <LoadingSpinner loadingSpinner={loading} />;
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">
 

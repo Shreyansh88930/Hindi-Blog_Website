@@ -5,7 +5,12 @@ import MediaGrid from '../components/MediaGrid';
 import MediaUpload from '../components/MediaUpload';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useAuth } from '../context/AuthContext';
-import { Filter, Heart, Sparkles, Plus, Image, Video, Volume2 } from 'lucide-react';
+import {
+  Heart, Star, HandHeart, Image, Video, Volume2,
+  Filter, Plus
+} from 'lucide-react';
+import Footer from '../components/Footer';
+import DailyQuote from '../components/DailyQuote';
 
 const Home: React.FC = () => {
   const { user } = useAuth();
@@ -19,154 +24,126 @@ const Home: React.FC = () => {
   }, [selectedType]);
 
   const fetchMedia = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      let result;
-      if (selectedType) {
-        result = await fetchMediaByType(selectedType as 'image' | 'video' | 'audio');
-      } else {
-        result = await fetchAllMedia();
-      }
-
-      if (result.error) {
-        console.error('Error fetching media:', result.error);
-      } else {
-        setMedia(result.data || []);
-      }
-    } catch (error) {
-      console.error('Error fetching media:', error);
+      const result = selectedType
+        ? await fetchMediaByType(selectedType as 'image' | 'video' | 'audio')
+        : await fetchAllMedia();
+      if (result.error) console.error(result.error);
+      else setMedia(result.data || []);
+    } catch (err) {
+      console.error('Media fetch error:', err);
     } finally {
       setLoading(false);
     }
-  };
-
-  const clearFilters = () => {
-    setSelectedType('');
   };
 
   const handleUploadComplete = (newMedia: MediaItem) => {
     setMedia(prev => [newMedia, ...prev]);
   };
 
-  const getTypeStats = () => {
-    const images = media.filter(item => item.file_type === 'image').length;
-    const videos = media.filter(item => item.file_type === 'video').length;
-    const audios = media.filter(item => item.file_type === 'audio').length;
-    return { images, videos, audios };
+  const clearFilters = () => setSelectedType('');
+
+  const stats = {
+    images: media.filter(m => m.file_type === 'image').length,
+    videos: media.filter(m => m.file_type === 'video').length,
+    audios: media.filter(m => m.file_type === 'audio').length,
   };
 
-  const stats = getTypeStats();
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-orange-50 to-yellow-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      {/* Hero Section */}
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-orange-50 to-yellow-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+          <LoadingSpinner loadingSpinner={loading} />
+        </div>
+      )}
+
+      {/* Hero */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-rose-400/20 to-orange-400/20 dark:from-rose-900/20 dark:to-orange-900/20"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
-            <div className="flex justify-center mb-6">
-              <div className="relative">
-                <Heart className="h-16 w-16 text-rose-500 animate-pulse" />
-                <Sparkles className="h-8 w-8 text-yellow-500 absolute -top-2 -right-2 animate-bounce" />
-              </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-rose-400/10 to-orange-400/10 dark:from-rose-900/10 dark:to-orange-900/10" />
+        <div className="relative max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <HandHeart className="h-16 w-16 text-rose-500 animate-pulse" />
+              <Star className="h-8 w-8 text-yellow-500 absolute -top-2 -right-2 animate-bounce" />
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
-              प्रेरणा का स्रोत
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-              हर दिन नई प्रेरणा के साथ अपने जीवन को सुंदर बनाएं
-            </p>
-            <div className="flex justify-center">
-              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-6 py-3 border border-gray-200 dark:border-gray-700">
-                <span className="text-gray-700 dark:text-gray-300 font-medium">
-                  ✨ कुल {media.length} मीडिया फाइलें ✨
-                </span>
-              </div>
-            </div>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white tracking-tight drop-shadow-sm text-center">
+            पी.एल. फाउंडेशन
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mt-4 max-w-3xl mx-auto text-center">
+            "सेवा ही सच्चा धर्म है।"
+          </p>
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto text-center italic">
+            "समाज की भलाई ही हमारी सच्ची प्रेरणा है।"
+          </p>
+          <div className="mt-6">
+            <span className="inline-block bg-white/70 dark:bg-gray-800/70 px-6 py-2 rounded-full border border-gray-300 dark:border-gray-600 backdrop-blur-sm text-gray-800 dark:text-white font-medium shadow-sm">
+              ✨ कुल {media.length} मीडिया फाइलें ✨
+            </span>
           </div>
         </div>
       </div>
+        <DailyQuote />
 
-      {/* Stats Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 text-center">
-            <div className="flex items-center justify-center mb-2">
-              <Heart className="h-8 w-8 text-rose-500" />
-            </div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{media.length}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">कुल मीडिया</div>
+      {/* Stats */}
+      <div className="max-w-7xl mx-auto px-4 py-10 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        {[
+          { icon: <Heart className="text-rose-500" />, value: media.length, label: 'कुल मीडिया' },
+          { icon: <Image className="text-sky-500" />, value: stats.images, label: 'चित्र' },
+          { icon: <Video className="text-green-500" />, value: stats.videos, label: 'वीडियो' },
+          { icon: <Volume2 className="text-purple-500" />, value: stats.audios, label: 'ऑडियो' },
+        ].map((stat, idx) => (
+          <div
+            key={idx}
+            className="bg-white/80 dark:bg-gray-800/80 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 text-center shadow-md backdrop-blur-lg"
+          >
+            <div className="flex justify-center mb-2">{stat.icon}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</div>
           </div>
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 text-center">
-            <div className="flex items-center justify-center mb-2">
-              <Image className="h-8 w-8 text-blue-500" />
-            </div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.images}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">चित्र</div>
-          </div>
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 text-center">
-            <div className="flex items-center justify-center mb-2">
-              <Video className="h-8 w-8 text-green-500" />
-            </div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.videos}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">वीडियो</div>
-          </div>
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 text-center">
-            <div className="flex items-center justify-center mb-2">
-              <Volume2 className="h-8 w-8 text-purple-500" />
-            </div>
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.audios}</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">ऑडियो</div>
-          </div>
-        </div>
+        ))}
       </div>
 
-      {/* Filters Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center space-x-2">
-                <Filter className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-                <span className="font-medium text-gray-700 dark:text-gray-300">फ़िल्टर:</span>
-              </div>
-              
-              <select
-                value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}
-                className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-              >
-                <option value="">सभी प्रकार</option>
-                <option value="image">चित्र</option>
-                <option value="video">वीडियो</option>
-                <option value="audio">ऑडियो</option>
-              </select>
-
-              {selectedType && (
-                <button
-                  onClick={clearFilters}
-                  className="px-4 py-2 text-sm font-medium text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 transition-colors"
-                >
-                  फ़िल्टर साफ़ करें
-                </button>
-              )}
-            </div>
-            
-            {user && (
+      {/* Filters */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="bg-white/90 dark:bg-gray-800/90 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm backdrop-blur-md p-6 flex flex-wrap justify-between items-center gap-4">
+          <div className="flex items-center gap-3 flex-wrap">
+            <Filter className="text-gray-600 dark:text-gray-400" />
+            <span className="font-medium text-gray-800 dark:text-gray-300">फ़िल्टर:</span>
+            <select
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="px-4 py-2 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 focus:ring-rose-500"
+            >
+              <option value="">सभी प्रकार</option>
+              <option value="image">चित्र</option>
+              <option value="video">वीडियो</option>
+              <option value="audio">ऑडियो</option>
+            </select>
+            {selectedType && (
               <button
-                onClick={() => setShowUpload(true)}
-                className="bg-rose-600 dark:bg-rose-700 text-white px-4 py-2 rounded-lg font-medium hover:bg-rose-700 dark:hover:bg-rose-600 transition-colors flex items-center space-x-2"
+                onClick={clearFilters}
+                className="text-sm text-rose-600 dark:text-rose-400 hover:underline"
               >
-                <Plus className="h-4 w-4" />
-                <span>अपलोड करें</span>
+                फ़िल्टर हटाएं
               </button>
             )}
           </div>
+          {user && (
+            <button
+              onClick={() => setShowUpload(true)}
+              className="flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg shadow-sm transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              अपलोड करें
+            </button>
+          )}
         </div>
       </div>
 
       {/* Media Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <MediaGrid media={media} loading={loading} />
       </div>
 
@@ -177,6 +154,8 @@ const Home: React.FC = () => {
           onClose={() => setShowUpload(false)}
         />
       )}
+
+      <Footer />
     </div>
   );
 };

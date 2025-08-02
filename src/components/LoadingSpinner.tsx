@@ -1,13 +1,13 @@
-import React from 'react';
-import { Heart } from 'lucide-react';
+import React from "react";
+import "./Loader.css";
 
-const LoadingSpinner: React.FC = () => {
+
+const LoadingSpinner = ({ loadingSpinner }: { loadingSpinner: boolean }) => {
+  if (!loadingSpinner) return null;
+
   return (
-    <div className="flex items-center justify-center min-h-64">
-      <div className="relative">
-        <Heart className="h-12 w-12 text-rose-500 animate-pulse" />
-        <div className="absolute inset-0 h-12 w-12 rounded-full border-2 border-rose-200 border-t-rose-500 animate-spin"></div>
-      </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/10">
+      <div className="loader"></div>
     </div>
   );
 };

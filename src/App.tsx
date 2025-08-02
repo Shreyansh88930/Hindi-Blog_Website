@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
 import AllPosts from './pages/AllPost';
+import MediaDetail from './components/MediaDetail';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/allposts" element={<AllPosts />} />
               <Route path="/about" element={<About />} />
+              <Route path="/media/:id" element={<MediaDetail />} />
             </Routes>
           </div>
         </Router>

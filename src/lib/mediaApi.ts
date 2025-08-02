@@ -9,14 +9,15 @@ export async function getAllMedia() {
   return { data, error }
 }
 
-export async function getMediaById(id: string) {
-  const { data, error } = await supabase
-    .from('media')
-    .select('*')
-    .eq('id', id)
-    .single()
-  return { data, error }
+export async function getSingleMediaById(id: string): Promise<MediaItem | null> {
+  const { data, error } = await supabase.from('media').select('*').eq('id', id).single();
+  if (error) {
+    console.error(error);
+    return null;
+  }
+  return data;
 }
+
 
 export async function createMedia(media: any) {
   const { data, error } = await supabase
