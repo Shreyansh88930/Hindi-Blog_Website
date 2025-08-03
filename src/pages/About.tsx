@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
-import authorImg from '../assets/author.png';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -79,7 +78,7 @@ const About: React.FC = () => {
         <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
           <div className="flex justify-center">
             <img
-              src="author.jpg"
+              src="author.png"
               alt="लेखक"
               className="rounded-xl shadow-lg w-64 sm:w-72 object-cover border border-gray-200 dark:border-gray-700"
             />
