@@ -70,21 +70,22 @@ const About: React.FC = () => {
     setIsSubmitting(false);
   };
   if (loading) return <LoadingSpinner loadingSpinner={loading} />;
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">
 
       {/* Author Info Section */}
-      <section className="py-16 px-4 md:px-8">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
           <div className="flex justify-center">
             <img
-              src={authorImg}
+              src="author.jpg"
               alt="लेखक"
-              className="rounded-xl shadow-lg w-72 h-auto object-cover border border-gray-200 dark:border-gray-700"
+              className="rounded-xl shadow-lg w-64 sm:w-72 object-cover border border-gray-200 dark:border-gray-700"
             />
           </div>
-          <div className="md:col-span-2 space-y-4 text-gray-800 dark:text-gray-300 font-devanagari text-md leading-relaxed">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">लेखक परिचय</h2>
+          <div className="md:col-span-2 space-y-4 text-gray-800 dark:text-gray-300 font-devanagari text-base leading-relaxed">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">लेखक परिचय</h2>
             <p><strong>जन्म:</strong> 16 जुलाई, 1950, गांव-बसेठ, जिला-अलवर (राजस्थान)</p>
             <p><strong>शिक्षा:</strong> एम.ए., एल.एल.बी., पीएच.डी.</p>
             <p><strong>सृजन:</strong> हिन्दी भाषा की विविध विधाओं में निरंतर सृजनरत।</p>
@@ -102,106 +103,102 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* Contact Form Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-xl space-y-6">
-              <h2 className="text-2xl font-bold font-devanagari text-gray-900 dark:text-white">संपर्क करें</h2>
-              <form onSubmit={handleContactSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      required
-                      value={contactForm.name}
-                      onChange={handleContactChange}
-                      placeholder="Your full name"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      value={contactForm.email}
-                      onChange={handleContactChange}
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                </div>
+      {/* Contact Section */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-800 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {/* Contact Form */}
+          <div className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl shadow-md space-y-6">
+            <h2 className="text-2xl font-bold font-devanagari text-gray-900 dark:text-white">संपर्क करें</h2>
+            <form onSubmit={handleContactSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="subject">Subject</Label>
+                  <Label htmlFor="name">Name</Label>
                   <Input
-                    id="subject"
-                    name="subject"
-                    type="text"
+                    id="name"
+                    name="name"
                     required
-                    value={contactForm.subject}
+                    value={contactForm.name}
                     onChange={handleContactChange}
-                    placeholder="What is this regarding?"
+                    placeholder="Your full name"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
                     required
-                    value={contactForm.message}
+                    value={contactForm.email}
                     onChange={handleContactChange}
-                    placeholder="Tell us more about your inquiry..."
-                    rows={6}
+                    placeholder="your@email.com"
                   />
                 </div>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md w-full flex items-center justify-center"
-                >
-                  <Send className="mr-2 h-4 w-4" />
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </button>
-              </form>
-            </div>
+              </div>
+              <div>
+                <Label htmlFor="subject">Subject</Label>
+                <Input
+                  id="subject"
+                  name="subject"
+                  required
+                  value={contactForm.subject}
+                  onChange={handleContactChange}
+                  placeholder="What is this regarding?"
+                />
+              </div>
+              <div>
+                <Label htmlFor="message">Message</Label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  required
+                  value={contactForm.message}
+                  onChange={handleContactChange}
+                  placeholder="Tell us more about your inquiry..."
+                  rows={6}
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md w-full flex items-center justify-center"
+              >
+                <Send className="mr-2 h-4 w-4" />
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+              </button>
+            </form>
+          </div>
 
-            {/* Contact Info */}
-            <div className="space-y-6 bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                  <Mail className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-semibold">Email</h3>
-                  <p className="text-gray-600 dark:text-gray-400">pyarelal50@gmail.com</p>
-                </div>
+          {/* Contact Info */}
+          <div className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl shadow-md space-y-6">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                <Mail className="w-5 h-5 text-white" />
               </div>
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                  <Phone className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-semibold">Phone</h3>
-                  <p className="text-gray-600 dark:text-gray-400">+91 (555) 123-4567</p>
-                </div>
+              <div>
+                <h3 className="font-semibold">Email</h3>
+                <p className="text-gray-600 dark:text-gray-400">pyarelal50@gmail.com</p>
               </div>
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-semibold">Address</h3>
-                  <p className="text-gray-600 dark:text-gray-400">
-                    13-B Bhagwati Nagar<br />
-                    Kartarpura, Jaipur, Rajasthan
-                  </p>
-                </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                <Phone className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Phone</h3>
+                <p className="text-gray-600 dark:text-gray-400">+91 (555) 123-4567</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                <MapPin className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Address</h3>
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  13-B भगवती नगर<br />
+                  करतारपुरा, जयपुर, राजस्थान
+                </p>
               </div>
             </div>
           </div>

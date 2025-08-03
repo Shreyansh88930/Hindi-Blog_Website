@@ -5,7 +5,6 @@ import LikeButton from './LikeButton';
 import { CommentsList } from './CommentList';
 import { Link } from 'react-router-dom';
 
-
 interface MediaGridProps {
   media: MediaItem[];
   loading?: boolean;
@@ -39,7 +38,7 @@ const MediaGrid: React.FC<MediaGridProps> = ({ media, loading }) => {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse">
         {[...Array(6)].map((_, i) => (
           <div key={i} className="bg-white/80 dark:bg-gray-800/80 rounded-2xl p-6 shadow-md">
             <div className="bg-gray-300 dark:bg-gray-600 h-48 rounded-xl mb-4" />
@@ -53,7 +52,7 @@ const MediaGrid: React.FC<MediaGridProps> = ({ media, loading }) => {
 
   if (media.length === 0) {
     return (
-      <div className="text-center py-16">
+      <div className="text-center py-16 px-4">
         <ImageIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
         <h3 className="text-xl font-semibold text-gray-900 dark:text-white">कोई मीडिया नहीं मिला</h3>
         <p className="text-gray-600 dark:text-gray-400 mt-2">अभी तक कोई मीडिया अपलोड नहीं किया गया है</p>
@@ -62,7 +61,7 @@ const MediaGrid: React.FC<MediaGridProps> = ({ media, loading }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
       {media.map((item) => (
         <div
           key={item.id}
@@ -71,7 +70,7 @@ const MediaGrid: React.FC<MediaGridProps> = ({ media, loading }) => {
           hover:shadow-lg hover:scale-[1.01]"
         >
           <div className="p-5">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
               <div className="flex items-center gap-2">
                 {getTypeIcon(item.file_type)}
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -89,7 +88,7 @@ const MediaGrid: React.FC<MediaGridProps> = ({ media, loading }) => {
                 <img
                   src={item.url}
                   alt={item.title}
-                  className="w-full h-52 object-cover rounded-xl shadow-sm transition duration-300 hover:opacity-90"
+                  className="w-full h-52 min-h-[12rem] object-cover rounded-xl shadow-sm transition duration-300 hover:opacity-90"
                   loading="lazy"
                 />
               )}
@@ -97,7 +96,7 @@ const MediaGrid: React.FC<MediaGridProps> = ({ media, loading }) => {
                 <video
                   src={item.url}
                   controls
-                  className="w-full h-52 object-cover rounded-xl shadow-sm"
+                  className="w-full h-52 min-h-[12rem] object-cover rounded-xl shadow-sm"
                   preload="metadata"
                 >
                   आपका ब्राउज़र वीडियो प्लेबैक का समर्थन नहीं करता।

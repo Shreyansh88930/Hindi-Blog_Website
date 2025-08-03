@@ -9,6 +9,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+
 // Database types
 export interface MediaItem {
   id: string;
@@ -32,6 +33,7 @@ export const signOutUser = async () => {
   const { error } = await supabase.auth.signOut();
   return { error };
 };
+
 
 export const getCurrentUser = async () => {
   const { data: { user } } = await supabase.auth.getUser();

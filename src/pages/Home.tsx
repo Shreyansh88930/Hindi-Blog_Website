@@ -68,23 +68,24 @@ const Home: React.FC = () => {
               <Star className="h-8 w-8 text-yellow-500 absolute -top-2 -right-2 animate-bounce" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white tracking-tight drop-shadow-sm text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900 dark:text-white tracking-tight drop-shadow-sm">
             पी.एल. फाउंडेशन
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mt-4 max-w-3xl mx-auto text-center">
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-700 dark:text-gray-300 mt-4 max-w-3xl mx-auto">
             "सेवा ही सच्चा धर्म है।"
           </p>
-          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto text-center italic">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto italic">
             "समाज की भलाई ही हमारी सच्ची प्रेरणा है।"
           </p>
           <div className="mt-6">
-            <span className="inline-block bg-white/70 dark:bg-gray-800/70 px-6 py-2 rounded-full border border-gray-300 dark:border-gray-600 backdrop-blur-sm text-gray-800 dark:text-white font-medium shadow-sm">
+            <span className="inline-block bg-white/70 dark:bg-gray-800/70 px-6 py-2 rounded-full border border-gray-300 dark:border-gray-600 backdrop-blur-sm text-gray-800 dark:text-white font-medium shadow-sm text-sm sm:text-base">
               ✨ कुल {media.length} मीडिया फाइलें ✨
             </span>
           </div>
         </div>
       </div>
-        <DailyQuote />
+
+      <DailyQuote />
 
       {/* Stats */}
       <div className="max-w-7xl mx-auto px-4 py-10 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -107,8 +108,8 @@ const Home: React.FC = () => {
 
       {/* Filters */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-white/90 dark:bg-gray-800/90 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm backdrop-blur-md p-6 flex flex-wrap justify-between items-center gap-4">
-          <div className="flex items-center gap-3 flex-wrap">
+        <div className="bg-white/90 dark:bg-gray-800/90 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm backdrop-blur-md p-6 flex flex-col sm:flex-row flex-wrap justify-between items-center gap-4">
+          <div className="flex flex-wrap items-center gap-3">
             <Filter className="text-gray-600 dark:text-gray-400" />
             <span className="font-medium text-gray-800 dark:text-gray-300">फ़िल्टर:</span>
             <select
@@ -133,7 +134,7 @@ const Home: React.FC = () => {
           {user && (
             <button
               onClick={() => setShowUpload(true)}
-              className="flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg shadow-sm transition-all"
+              className="flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg shadow-sm transition-all w-full sm:w-auto justify-center"
             >
               <Plus className="w-4 h-4" />
               अपलोड करें

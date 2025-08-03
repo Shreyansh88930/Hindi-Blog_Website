@@ -39,11 +39,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (error) throw error;
   };
 
-  const logout = async () => {
+const logout = async () => {
     const { error } = await signOutUser();
     if (error) throw error;
   };
-
   const value = {
     user,
     loading,

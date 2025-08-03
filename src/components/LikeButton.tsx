@@ -39,7 +39,9 @@ const LikeButton = ({ postId }: { postId: string }) => {
       onClick={toggleLike}
       disabled={loading}
       className={`
-        group flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300
+        group inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2
+        rounded-full border text-sm sm:text-base font-medium
+        transition-all duration-300 ease-in-out
         ${liked ? 'bg-rose-100 border-rose-300 text-rose-600' : 'bg-gray-100 border-gray-300 text-gray-500'}
         ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105 hover:shadow-md'}
       `}
@@ -49,12 +51,12 @@ const LikeButton = ({ postId }: { postId: string }) => {
           liked ? 'text-rose-500 animate-like-pulse' : ''
         }`}
       >
-        <Heart className="w-5 h-5" fill={liked ? '#f43f5e' : 'none'} />
+        <Heart className="w-5 h-5 sm:w-6 sm:h-6" fill={liked ? '#f43f5e' : 'none'} />
         {liked && (
-          <span className="absolute -inset-1 rounded-full blur-xl opacity-60 bg-rose-300 animate-ping z-[-1]"></span>
+          <span className="absolute -inset-1 rounded-full blur-xl opacity-60 bg-rose-300 animate-ping z-[-1]" />
         )}
       </span>
-      <span className="text-md font-medium">{likesCount}</span>
+      <span className="font-medium">{likesCount}</span>
     </button>
   );
 };

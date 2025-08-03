@@ -11,12 +11,13 @@ const Login: React.FC = () => {
   const [error, setError] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
-const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1200); // simulate loading delay
     return () => clearTimeout(timer);
   }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -41,18 +42,18 @@ const [loading, setLoading] = useState(true);
   if (loading) return <LoadingSpinner loadingSpinner={loading} />;
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-tr from-rose-100 via-yellow-50 to-orange-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <div className="max-w-md w-full">
-        <div className="relative bg-white/80 dark:bg-gray-800/70 backdrop-blur-md rounded-3xl shadow-2xl p-10 border border-gray-200 dark:border-gray-700 overflow-hidden transition-transform transform hover:scale-[1.01] duration-300">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-gradient-to-tr from-rose-100 via-yellow-50 to-orange-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="w-full max-w-md">
+        <div className="relative bg-white/80 dark:bg-gray-800/70 backdrop-blur-md rounded-3xl shadow-2xl p-6 sm:p-10 border border-gray-200 dark:border-gray-700 overflow-hidden transition-transform transform hover:scale-[1.01] duration-300">
           <div className="absolute -top-12 right-10 w-40 h-40 bg-rose-300/30 rounded-full filter blur-3xl animate-pulse"></div>
           <div className="text-center mb-8 relative z-10">
             <div className="flex justify-center mb-4">
               <Heart className="h-14 w-14 text-rose-500 animate-pulse" />
             </div>
-            <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-1">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white mb-1">
               व्यवस्थापक लॉगिन
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
               कृपया नीचे लॉगिन विवरण भरें
             </p>
           </div>
@@ -81,7 +82,7 @@ const [loading, setLoading] = useState(true);
 
             <div>
               <label htmlFor="password" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                🔒 पासवर्ड
+                🔐 पासवर्ड
               </label>
               <div className="relative">
                 <input

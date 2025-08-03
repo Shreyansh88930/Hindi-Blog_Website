@@ -20,7 +20,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1200); // simulate loading delay
+    const timer = setTimeout(() => setLoading(false), 1200);
     return () => clearTimeout(timer);
   }, []);
 
@@ -53,8 +53,8 @@ const Dashboard = () => {
         return (
           <img
             src={post.url}
-            className="rounded-xl h-48 w-full object-cover border transition-all duration-300 group-hover:scale-105"
             alt="Uploaded"
+            className="rounded-xl h-48 w-full object-cover border transition-transform duration-300 group-hover:scale-105"
           />
         );
       case 'video':
@@ -94,10 +94,9 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-tr from-rose-50 via-orange-50 to-yellow-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-
-      <main className="max-w-6xl mx-auto px-4 py-12">
-        <div className="flex items-center justify-between mb-10">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white font-devanagari">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-10 gap-4">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white font-devanagari">
             डैशबोर्ड
           </h1>
           <button
@@ -105,27 +104,23 @@ const Dashboard = () => {
               setSelectedPost(null);
               setShowForm(true);
             }}
-            className="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg transition-all"
+            className="bg-rose-600 hover:bg-rose-700 text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl flex items-center gap-2 shadow-lg transition"
           >
             <Plus size={20} />
-            <span className="font-medium text-sm">नया पोस्ट</span>
+            <span className="text-sm font-medium">नया पोस्ट</span>
           </button>
         </div>
 
-        {loading ? (
-          <div className="flex justify-center items-center py-32">
-            <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-rose-500"></div>
-          </div>
-        ) : media.length === 0 ? (
+        {media.length === 0 ? (
           <p className="text-center text-gray-600 dark:text-gray-300 font-devanagari mt-20">
             कोई पोस्ट उपलब्ध नहीं है।
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {media.map((post) => (
               <div
                 key={post.id}
-                className="group bg-white/90 dark:bg-gray-900/80 rounded-2xl border border-gray-200 dark:border-gray-700 p-5 shadow-md flex flex-col justify-between transition-all hover:shadow-lg hover:scale-[1.01]"
+                className="group bg-white/90 dark:bg-gray-900/80 rounded-2xl border border-gray-200 dark:border-gray-700 p-5 shadow-md flex flex-col justify-between transition hover:shadow-lg hover:scale-[1.01]"
               >
                 <div className="flex items-center justify-between text-sm mb-3 text-gray-500 dark:text-gray-400">
                   <div className="flex items-center gap-1">
@@ -135,13 +130,13 @@ const Dashboard = () => {
                   <span className="text-xs">{new Date(post.created_at).toLocaleDateString()}</span>
                 </div>
 
-                <h2 className="text-lg font-bold text-gray-900 dark:text-white font-devanagari mb-2">
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white font-devanagari mb-2 break-words">
                   {post.title}
                 </h2>
 
                 {renderMediaPreview(post)}
 
-                <div className="mt-4 flex justify-end gap-2">
+                <div className="mt-4 flex justify-end gap-2 flex-wrap">
                   <button
                     onClick={() => handleEdit(post)}
                     className="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1.5 rounded-lg flex items-center gap-1 text-sm"

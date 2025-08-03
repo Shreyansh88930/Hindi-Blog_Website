@@ -22,13 +22,9 @@ const MediaUpload: React.FC<MediaUploadProps> = ({ onUploadComplete, onClose }) 
     if (file) {
       setFormData({ ...formData, file });
 
-      if (file.type.startsWith('image/')) {
-        setFormData((prev) => ({ ...prev, file_type: 'image' }));
-      } else if (file.type.startsWith('video/')) {
-        setFormData((prev) => ({ ...prev, file_type: 'video' }));
-      } else if (file.type.startsWith('audio/')) {
-        setFormData((prev) => ({ ...prev, file_type: 'audio' }));
-      }
+      if (file.type.startsWith('image/')) setFormData((prev) => ({ ...prev, file_type: 'image' }));
+      else if (file.type.startsWith('video/')) setFormData((prev) => ({ ...prev, file_type: 'video' }));
+      else if (file.type.startsWith('audio/')) setFormData((prev) => ({ ...prev, file_type: 'audio' }));
     }
   };
 
@@ -67,11 +63,11 @@ const MediaUpload: React.FC<MediaUploadProps> = ({ onUploadComplete, onClose }) 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 w-full max-w-md shadow-2xl transition-all duration-300 animate-fade-in" style={{ maxHeight: '90vh', overflowY: 'auto' }}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 sm:p-6">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 sm:p-8 w-full max-w-md sm:max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto animate-fade-in">
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-2xl font-bold text-rose-600 dark:text-rose-300 tracking-tight">📁 नया मीडिया जोड़ें</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-rose-600 dark:text-rose-300">📁 नया मीडिया जोड़ें</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-rose-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
@@ -111,7 +107,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({ onUploadComplete, onClose }) 
           {/* Media Type Selector */}
           <div>
             <label className="block mb-2 text-sm font-medium text-gray-800 dark:text-gray-200">मीडिया प्रकार</label>
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
                 { value: 'image', label: 'चित्र', icon: Image },
                 { value: 'video', label: 'वीडियो', icon: Video },
@@ -122,20 +118,20 @@ const MediaUpload: React.FC<MediaUploadProps> = ({ onUploadComplete, onClose }) 
                   key={value}
                   type="button"
                   onClick={() => setFormData({ ...formData, file_type: value as any })}
-                  className={`flex flex-col items-center justify-center p-3 rounded-xl border transition hover:shadow-sm ${
+                  className={`flex flex-col items-center justify-center p-3 rounded-xl border transition text-sm ${
                     formData.file_type === value
                       ? 'border-rose-500 bg-rose-100 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400'
                       : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-rose-300'
                   }`}
                 >
                   <Icon className="h-6 w-6 mb-1" />
-                  <span className="text-xs">{label}</span>
+                  <span>{label}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* File Input */}
+          {/* File Upload */}
           {formData.file_type !== 'text' && (
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-800 dark:text-gray-200">मीडिया फाइल</label>
@@ -168,8 +164,8 @@ const MediaUpload: React.FC<MediaUploadProps> = ({ onUploadComplete, onClose }) 
             </div>
           )}
 
-          {/* Buttons */}
-          <div className="flex justify-between pt-4 space-x-3">
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row justify-between gap-3 pt-4">
             <button
               type="submit"
               disabled={uploading || (formData.file_type !== 'text' && !formData.file)}
@@ -187,7 +183,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({ onUploadComplete, onClose }) 
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="flex-1 py-2 px-4 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
             >
               रद्द करें
             </button>

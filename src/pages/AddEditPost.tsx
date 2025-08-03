@@ -22,7 +22,6 @@ const AddEditPost = ({ post, onClose }) => {
 
     let url = form.url
 
-    // Skip upload for text posts
     if (form.file_type !== 'text' && mediaFile) {
       const { url: uploadedUrl, error } = await uploadMediaFile(mediaFile, form.file_type)
       if (error) {
@@ -46,10 +45,19 @@ const AddEditPost = ({ post, onClose }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center">
-      <div className="bg-white dark:bg-gray-900 p-8 rounded-xl w-full max-w-lg shadow relative border">
-        <button onClick={onClose} className="absolute top-5 right-5 text-gray-400 hover:text-rose-600"><X size={23} /></button>
-        <h2 className="text-xl mb-5 font-bold font-devanagari dark:text-white">{post ? 'Edit' : 'Add'} Post</h2>
+    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center px-4 sm:px-6">
+      <div className="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl w-full max-w-lg max-h-screen overflow-y-auto shadow-lg relative border border-gray-200 dark:border-gray-800">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-rose-600 transition"
+        >
+          <X size={23} />
+        </button>
+
+        <h2 className="text-lg sm:text-xl mb-5 font-bold font-devanagari dark:text-white">
+          {post ? 'Edit' : 'Add'} Post
+        </h2>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             name="title"
@@ -57,7 +65,7 @@ const AddEditPost = ({ post, onClose }) => {
             onChange={handleInput}
             placeholder="Title"
             required
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full border rounded-lg px-3 py-2 text-sm sm:text-base"
           />
           <textarea
             name="description"
@@ -65,7 +73,7 @@ const AddEditPost = ({ post, onClose }) => {
             onChange={handleInput}
             rows={3}
             placeholder="Description"
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full border rounded-lg px-3 py-2 text-sm sm:text-base"
           />
           <select
             name="file_type"
@@ -74,7 +82,7 @@ const AddEditPost = ({ post, onClose }) => {
               setForm({ ...form, file_type: e.target.value, url: '' })
               setMediaFile(null)
             }}
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full border rounded-lg px-3 py-2 text-sm sm:text-base"
           >
             <option value="text">Text</option>
             <option value="image">Image</option>
@@ -93,16 +101,22 @@ const AddEditPost = ({ post, onClose }) => {
                   : 'audio/*'
               }
               onChange={handleFileChange}
-              className="w-full"
+              className="w-full text-sm sm:text-base"
             />
           )}
 
-          <div className="flex justify-end gap-2 pt-2">
-            <button type="button" onClick={onClose} className="px-4 py-2 rounded border">Cancel</button>
+          <div className="flex justify-end gap-3 pt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 rounded border border-gray-400 text-sm sm:text-base hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               disabled={uploading}
-              className="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded flex items-center gap-1"
+              className="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded flex items-center gap-1 text-sm sm:text-base transition"
             >
               <Plus size={16} />
               {uploading ? 'Saving...' : post ? 'Update' : 'Add'}
